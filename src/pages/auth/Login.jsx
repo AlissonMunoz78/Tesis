@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { FaEnvelope, FaLock, FaSpinner } from 'react-icons/fa';
 import api from '../../api/axios';
 import storeAuth from '../../context/storeAuth';
+import dino from '../../assets/dino.jpg';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -43,16 +45,16 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center relative p-4"
-      style={{
-        backgroundImage: "url('/assents/dino.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-center relative p-4 overflow-hidden">
+
+      {/* Fondo con blur */}
+      <div
+        className="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+        style={{ backgroundImage: `url(${dino})` }}
+      ></div>
+
       {/* Capa oscura */}
-      <div className="absolute inset-0 bg-black opacity-40"></div>
+      <div className="absolute inset-0 bg-black/40"></div>
 
       {/* Tarjeta login */}
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative z-10">
@@ -140,7 +142,7 @@ const Login = () => {
           <div className="flex-1 border-t border-gray-300"></div>
         </div>
 
-        {/* Botón Google oficial */}
+        {/* Google Login */}
         <button
           onClick={handleGoogleLogin}
           className="w-full rounded-lg border border-gray-300 bg-white py-3 px-4 flex items-center justify-center gap-3 hover:bg-gray-100 transition shadow-sm"
