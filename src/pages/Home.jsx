@@ -6,369 +6,328 @@ import {
   FaMapMarkerAlt,
   FaClock,
   FaPhone,
-  FaEnvelope,
   FaArrowRight,
   FaDonate,
   FaCalendarAlt,
   FaUserPlus,
 } from "react-icons/fa";
 import { FaFacebook, FaSquareInstagram } from "react-icons/fa6";
+
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+
 import epn from "../../Public/epn.png";
 import museo from "../../Public/museo.png";
 
+
+
+
 export const Home = () => {
+  // Carrusel slides
+  const slides = [
+    "../../assets/dino.jpg'",
+    "../../assets/mamut.jpeg",
+    "../../assets/jurasico.jpg",
+  ];
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Carrusel automático con fade
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Detectar scroll para header
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
       {/* HEADER */}
-      <header className="container mx-auto py-6 md:flex justify-between items-center px-6 sticky top-0 bg-white shadow-md z-50">
-        <div className="flex items-center gap-4">
-          <img src={epn} alt="Logo EPN" className="h-20 w-auto" />
-          <h1
-            className="text-4xl text-teal-800 font-extrabold tracking-wider"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            MUSEO <span className="text-green-700">GUSTAVO ORCÉS</span>
-          </h1>
-        </div>
-
-        <nav className="mt-4 md:mt-0">
-          <ul className="flex gap-6 text-lg font-semibold text-teal-700">
-            <li>
-              <a
-                href="#inicio"
-                className="hover:text-green-800 transition-colors duration-300"
-              >
-                Inicio
-              </a>
-            </li>
-            <li>
-              <a
-                href="#sobre-nosotros"
-                className="hover:text-green-800 transition-colors duration-300"
-              >
-                Nosotros
-              </a>
-            </li>
-            <li>
-              <a
-                href="#servicios"
-                className="hover:text-green-800 transition-colors duration-300"
-              >
-                Servicios
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contacto"
-                className="hover:text-green-800 transition-colors duration-300"
-              >
-                Contacto
-              </a>
-            </li>
-            <li>
-              <Link
-                to="/login"
-                className="bg-teal-800 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition-colors"
-              >
-                Iniciar Sesión
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      {/* HERO SECTION */}
-      <main
-        id="inicio"
-        className="bg-green-50 text-center py-14 px-6 md:text-left md:flex justify-between items-center gap-10"
+      <header
+        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-[#2aa89b]/95 shadow-lg"
+            : "bg-black/50 backdrop-blur-md"
+        }`}
       >
-        <div className="md:w-3/5">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-teal-800 uppercase flex flex-col md:flex-row items-center gap-6 justify-center md:justify-start">
-            <span style={{ fontFamily: "'Playfair Display', serif" }}>
-              Patrimonio Científico
-            </span>
-            <img
-              src={museo}
-              alt="Logo Museo"
-              className="h-36 w-auto inline-block md:ml-6"
-            />
-          </h1>
-
-          <p className="text-xl md:text-2xl my-6 font-semibold text-gray-800">
-            Inspirando a través del conocimiento
-          </p>
-
-          <p className="text-lg my-4 text-gray-700">
-            Exposiciones permanentes, visitas guiadas, talleres educativos y
-            más...
-          </p>
-
-          {/* Botones */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center md:justify-start">
-            <a
-              href="#servicios"
-              className="bg-teal-800 text-white px-8 py-3 rounded-lg hover:bg-teal-700 transition font-semibold flex items-center justify-center space-x-2"
+        <div className="container mx-auto px-6 flex justify-between items-center py-5">
+          <div className="flex items-center gap-4">
+            <img src={epn} alt="Logo EPN" className="h-24 w-auto" />
+            <h1
+              className="text-3xl text-white font-bold tracking-wide"
+              style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              <span>Agendar Visita</span>
-              <FaArrowRight />
-            </a>
-            <a
-              href="#donaciones"
-              className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition font-semibold flex items-center justify-center space-x-2"
-            >
-              <FaDonate />
-              <span>Donar</span>
-            </a>
+              Museo Gustavo Orcés
+            </h1>
           </div>
-        </div>
-      </main>
-
-      {/* SOBRE NOSOTROS */}
-      <section id="sobre-nosotros" className="container mx-auto px-4 py-16">
-        <div className="text-center my-14 relative">
-          <h2
-            className="font-bold text-4xl inline-block bg-white px-6 relative z-10 text-teal-800 tracking-wide"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            SOBRE NOSOTROS
-          </h2>
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-3/4 border-t-4 border-teal-700 z-0"></div>
-        </div>
-
-        <div className="my-10 flex flex-col gap-10 items-center sm:flex-row sm:justify-around sm:items-center">
-          <div className="px-10 sm:w-3/4 text-center sm:text-left leading-relaxed text-lg">
-            <p className="mb-6 text-gray-800">
-              El Museo Gustavo Orcés es un espacio dedicado a la ciencia y la
-              historia natural del Ecuador. Nuestro objetivo es educar, inspirar
-              y conectar a los visitantes con la riqueza biológica y
-              paleontológica del país a través de experiencias inmersivas y
-              actividades didácticas.
-            </p>
-            <ul className="space-y-4 mt-6 text-teal-900 font-semibold">
-              <li className="flex items-center gap-3">
-                <MdMuseum className="text-4xl text-green-800" />
-                <span>Exhibiciones Permanentes</span>
+          <nav>
+            <ul className="flex gap-8 text-lg font-medium text-white">
+              <li>
+                <a className="hover:text-gray-200" href="#inicio">
+                  Inicio
+                </a>
               </li>
-              <li className="flex items-center gap-3">
-                <FaBookOpen className="text-4xl text-green-800" />
-                <span>Biblioteca Científica</span>
+              <li>
+                <a className="hover:text-gray-200" href="#sobre-nosotros">
+                  Nosotros
+                </a>
               </li>
-              <li className="flex items-center gap-3">
-                <FaChalkboardTeacher className="text-4xl text-green-800" />
-                <span>Programas Educativos</span>
+              <li>
+                <a className="hover:text-gray-200" href="#servicios">
+                  Servicios
+                </a>
+              </li>
+              <li>
+                <a className="hover:text-gray-200" href="#contacto">
+                  Contacto
+                </a>
+              </li>
+              <li>
+                <Link
+                  to="/login"
+                  className="border border-white text-white px-4 py-2 rounded-full hover:bg-white hover:text-[#2aa89b] transition"
+                >
+                  Iniciar Sesión
+                </Link>
               </li>
             </ul>
+          </nav>
+        </div>
+      </header>
+
+      {/* SECCIÓN INICIO */}
+      <section id="inicio" className="w-full relative mt-[110px]">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none"></div>
+        <div className="relative z-20 bg-[#e6f7f5] py-24 md:py-36 px-6 lg:px-24">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="md:w-1/2"
+            >
+              <h1
+                className="text-5xl md:text-6xl font-bold leading-tight text-[#2aa89b]"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Patrimonio Científico del Ecuador
+              </h1>
+              <p className="text-xl mt-6 text-gray-700 leading-relaxed">
+                Inspirando el conocimiento a través de la ciencia, historia
+                natural y exploración.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mt-10">
+                <a
+                  href="#servicios"
+                  className="border border-[#2aa89b] px-8 py-3 rounded-full text-[#2aa89b] font-semibold hover:bg-[#2aa89b] hover:text-white transition flex items-center gap-2 justify-center"
+                >
+                  Agendar Visita <FaArrowRight />
+                </a>
+                <a
+                  href="#donaciones"
+                  className="px-8 py-3 rounded-full bg-[#2aa89b] text-white font-semibold hover:bg-[#228f82] transition flex items-center gap-2 justify-center"
+                >
+                  <FaDonate /> Donar
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="md:w-1/2 flex justify-center"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#2aa89b] blur-2xl opacity-20 rounded-3xl"></div>
+                <img
+                  src={museo}
+                  alt="Museo"
+                  className="relative h-72 md:h-96 w-auto rounded-3xl shadow-lg border border-gray-200 object-contain"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* INFORMACIÓN DEL MUSEO */}
-      <section className="bg-green-50 py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center my-14 relative">
-            <h2
-              className="font-bold text-4xl inline-block bg-green-50 px-6 relative z-10 text-teal-800 tracking-wide"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              INFORMACIÓN DEL MUSEO
-            </h2>
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-3/4 border-t-4 border-teal-700 z-0"></div>
+      {/* CARRUSEL AUTOMÁTICO CON FADE */}
+      <section className="w-full py-16 bg-white">
+        <h2
+          className="text-4xl font-bold text-center text-[#2aa89b] mb-10"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Exhibiciones Destacadas
+        </h2>
+        <div className="max-w-5xl mx-auto relative overflow-hidden rounded-2xl shadow-xl h-[380px]">
+          <AnimatePresence>
+            <motion.img
+              key={currentSlide}
+              src={slides[currentSlide]}
+              alt={`Exhibición ${currentSlide + 1}`}
+              className="absolute w-full h-full object-cover rounded-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            />
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* SOBRE NOSOTROS */}
+      <section className="container mx-auto px-6 py-20" id="sobre-nosotros">
+        <h2
+          className="text-4xl font-bold text-center text-gray-800 mb-12 tracking-wide"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Sobre Nosotros
+        </h2>
+        <div className="max-w-4xl mx-auto text-center text-gray-700 leading-relaxed text-lg">
+          El Museo Gustavo Orcés es un espacio dedicado a la historia natural y
+          la investigación científica del Ecuador, con exhibiciones, colecciones
+          y programas educativos que conectan al público con la biodiversidad.
+        </div>
+        <div className="grid md:grid-cols-3 gap-10 mt-16">
+          <div className="text-center">
+            <MdMuseum className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+            <h4 className="text-xl font-semibold mb-2">Exhibiciones</h4>
+            <p className="text-gray-600">Colecciones científicas permanentes.</p>
           </div>
+          <div className="text-center">
+            <FaBookOpen className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+            <h4 className="text-xl font-semibold mb-2">Investigación</h4>
+            <p className="text-gray-600">Material de referencia para estudios.</p>
+          </div>
+          <div className="text-center">
+            <FaChalkboardTeacher className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+            <h4 className="text-xl font-semibold mb-2">Educación</h4>
+            <p className="text-gray-600">
+              Talleres, visitas guiadas y programas estudiantiles.
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Ubicación */}
-            <div className="text-center bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-              <div className="bg-teal-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaMapMarkerAlt className="text-4xl text-teal-800" />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-teal-800">
-                Ubicación
-              </h3>
-              <p className="text-gray-600">
-                Escuela Politécnica Nacional
-                <br />
-                Ladrón de Guevara E11-253
-                <br />
-                Quito, Ecuador
+      {/* INFORMACIÓN GENERAL */}
+      <section className="bg-[#e6f7f5] py-20">
+        <div className="container mx-auto px-6">
+          <h2
+            className="text-4xl font-bold text-center text-gray-800 mb-16"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+          >
+            Información General
+          </h2>
+          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+            <div className="bg-white p-10 rounded-xl shadow-md text-center border border-gray-200">
+              <FaMapMarkerAlt className="text-4xl text-[#2aa89b] mx-auto mb-4" />
+              <h3 className="font-bold text-xl mb-3">Ubicación</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Escuela Politécnica Nacional <br /> Ladrón de Guevara E11-253, Quito
               </p>
             </div>
-
-            {/* Horarios */}
-            <div className="text-center bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-              <div className="bg-teal-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaClock className="text-4xl text-teal-800" />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-teal-800">Horarios</h3>
-              <p className="text-gray-600">
-                <strong>Lunes a Viernes</strong>
-                <br />
-                08:00 - 16:30
-                <br />
-                <span className="text-sm text-gray-500">Entrada gratuita</span>
-              </p>
+            <div className="bg-white p-10 rounded-xl shadow-md text-center border border-gray-200">
+              <FaClock className="text-4xl text-[#2aa89b] mx-auto mb-4" />
+              <h3 className="font-bold text-xl mb-3">Horarios</h3>
+              <p className="text-gray-600">Lunes a Viernes <br /> 08:00 - 16:30</p>
             </div>
-
-            {/* Contacto */}
-            <div className="text-center bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-              <div className="bg-teal-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaPhone className="text-4xl text-teal-800" />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-teal-800">Contacto</h3>
-              <p className="text-gray-600">
-                <FaEnvelope className="inline mr-2 text-teal-700" />
-                info@museogustavorces.ec
-                <br />
-                <FaPhone className="inline mr-2 text-teal-700 mt-2" />
-                02 123 4567
-              </p>
+            <div className="bg-white p-10 rounded-xl shadow-md text-center border border-gray-200">
+              <FaPhone className="text-4xl text-[#2aa89b] mx-auto mb-4" />
+              <h3 className="font-bold text-xl mb-3">Contacto</h3>
+              <p className="text-gray-600">info@museogustavorces.ec <br /> 02 123 4567</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* SERVICIOS */}
-      <section id="servicios" className="container mx-auto px-4 py-16">
-        <div className="text-center my-14 relative">
-          <h2
-            className="font-bold text-4xl inline-block bg-white px-6 relative z-10 text-teal-800 tracking-wide"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            SERVICIOS
-          </h2>
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-3/4 border-t-4 border-teal-700 z-0"></div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Visitas Grupales */}
-          <div className="text-center shadow-lg hover:shadow-2xl transition-shadow duration-300 p-8 bg-green-50 rounded-xl">
-            <FaCalendarAlt className="inline text-6xl text-teal-800 mb-4" />
-            <h4 className="text-2xl font-bold text-teal-700 mb-4">
-              Visitas Grupales
-            </h4>
-            <p className="text-gray-700 mb-4">
-              Para grupos de 2 a 25 personas. Ideal para instituciones
-              educativas.
+      <section className="container mx-auto px-6 py-20" id="servicios">
+        <h2
+          className="text-4xl font-bold text-center text-gray-800 mb-16"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Servicios
+        </h2>
+        <div className="grid md:grid-cols-3 gap-10">
+          <div className="p-10 bg-white rounded-xl shadow-md border border-gray-200 text-center">
+            <FaCalendarAlt className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+            <h4 className="text-2xl font-semibold mb-4">Visitas Grupales</h4>
+            <p className="text-gray-600 mb-4">
+              Para grupos de 2 a 25 personas. Ideal para instituciones.
             </p>
-            <ul className="text-sm text-gray-600 mb-6 space-y-2 text-left">
-              <li>✓ Bloques de 30 minutos</li>
-              <li>✓ Reserva con 1 día de anticipación</li>
-              <li>✓ Lunes a Viernes</li>
-              <li>✓ Guías especializados</li>
-            </ul>
             <Link
               to="/publico/visitas/disponibilidad"
-              className="inline-block bg-teal-800 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+              className="inline-block border border-[#2aa89b] text-[#2aa89b] px-6 py-2 rounded-full hover:bg-[#2aa89b] hover:text-white transition"
             >
-              Consultar Disponibilidad
+              Consultar disponibilidad
             </Link>
           </div>
-
-          {/* Visitas Individuales */}
-          <div className="text-center shadow-lg hover:shadow-2xl transition-shadow duration-300 p-8 bg-green-50 rounded-xl">
-            <FaUserPlus className="inline text-6xl text-teal-800 mb-4" />
-            <h4 className="text-2xl font-bold text-teal-700 mb-4">
-              Visitas Individuales
-            </h4>
-            <p className="text-gray-700 mb-4">
-              Acceso libre durante nuestro horario de atención.
-            </p>
-            <ul className="text-sm text-gray-600 mb-6 space-y-2 text-left">
-              <li>✓ Sin necesidad de reserva</li>
-              <li>✓ Registro rápido al ingresar</li>
-              <li>✓ Entrada gratuita</li>
-              <li>✓ Recorre a tu propio ritmo</li>
-            </ul>
+          <div className="p-10 bg-white rounded-xl shadow-md border border-gray-200 text-center">
+            <FaUserPlus className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+            <h4 className="text-2xl font-semibold mb-4">Visitas Individuales</h4>
+            <p className="text-gray-600 mb-4">Acceso libre durante nuestro horario.</p>
             <Link
               to="/publico/visitante"
-              className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-block border border-[#2aa89b] text-[#2aa89b] px-6 py-2 rounded-full hover:bg-[#2aa89b] hover:text-white transition"
             >
-              Registrar Visita
+              Registrar visita
             </Link>
           </div>
-
-          {/* Login Pasantes */}
-          <div className="text-center shadow-lg hover:shadow-2xl transition-shadow duration-300 p-8 bg-green-50 rounded-xl">
-            <MdMuseum className="inline text-6xl text-teal-800 mb-4" />
-            <h4 className="text-2xl font-bold text-teal-700 mb-4">
-              Acceso Personal
-            </h4>
-            <p className="text-gray-700 mb-4">
-              Accede al sistema como administrador o pasante del museo.
-            </p>
-            <ul className="text-sm text-gray-600 mb-6 space-y-2 text-left">
-              <li>✓ Gestiona tu perfil</li>
-              <li>✓ Consulta horarios</li>
-              <li>✓ Registra actividades</li>
-              <li>✓ Administra visitas</li>
-            </ul>
+          <div className="p-10 bg-white rounded-xl shadow-md border border-gray-200 text-center">
+            <MdMuseum className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+            <h4 className="text-2xl font-semibold mb-4">Acceso Personal</h4>
+            <p className="text-gray-600 mb-4">Administradores y pasantes del museo.</p>
             <Link
               to="/login"
-              className="inline-block bg-teal-800 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+              className="inline-block border border-[#2aa89b] text-[#2aa89b] px-6 py-2 rounded-full hover:bg-[#2aa89b] hover:text-white transition"
             >
-              Iniciar Sesión
+              Iniciar sesión
             </Link>
           </div>
         </div>
       </section>
 
       {/* DONACIONES */}
-      <section
-        id="donaciones"
-        className="bg-gradient-to-br from-teal-50 to-green-100 py-16"
-      >
-        <div className="container mx-auto px-4">
-          <div className="text-center my-14 relative">
-            <h2
-              className="font-bold text-4xl inline-block bg-gradient-to-br from-teal-50 to-green-100 px-6 relative z-10 text-teal-800 tracking-wide"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              APOYA AL MUSEO
-            </h2>
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-3/4 border-t-4 border-teal-700 z-0"></div>
-          </div>
-
-          <p className="text-center text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
-            Tu contribución ayuda a preservar el patrimonio natural ecuatoriano
-            y a continuar con nuestra labor educativa.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Donación Económica */}
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-8">
-              <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaDonate className="text-4xl text-green-700" />
-              </div>
-              <h3 className="text-2xl font-bold text-center text-teal-800 mb-4">
-                Donación Económica
-              </h3>
-              <p className="text-gray-600 text-center mb-6">
-                Realiza una donación económica segura mediante pago en línea.
+      <section id="donaciones" className="bg-[#e6f7f5] py-20">
+        <div className="container mx-auto px-6">
+          <h2
+            className="text-4xl font-bold text-center text-gray-800 mb-12"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+          >
+            Apoya al Museo
+          </h2>
+          <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            <div className="bg-white p-10 rounded-xl shadow-md border border-gray-300 text-center">
+              <FaDonate className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold mb-3">Donación Económica</h3>
+              <p className="text-gray-600 mb-6">
+                Contribuye con nuestras actividades científicas.
               </p>
               <Link
                 to="/publico/donacion/economica"
-                className="block text-center bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold"
+                className="border border-[#2aa89b] text-[#2aa89b] px-6 py-2 rounded-full hover:bg-[#2aa89b] hover:text-white transition inline-block"
               >
-                Donar Ahora
+                Donar ahora
               </Link>
             </div>
-
-            {/* Donación de Bienes */}
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-8">
-              <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaBookOpen className="text-4xl text-blue-700" />
-              </div>
-              <h3 className="text-2xl font-bold text-center text-teal-800 mb-4">
-                Donación de Bienes
-              </h3>
-              <p className="text-gray-600 text-center mb-6">
-                Dona materiales, equipos o especímenes para nuestras
-                colecciones.
+            <div className="bg-white p-10 rounded-xl shadow-md border border-gray-300 text-center">
+              <FaBookOpen className="text-5xl text-[#2aa89b] mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold mb-3">Donación de Bienes</h3>
+              <p className="text-gray-600 mb-6">
+                Apoya con materiales o especímenes.
               </p>
               <Link
                 to="/publico/donacion/bienes"
-                className="block text-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
+                className="border border-[#2aa89b] text-[#2aa89b] px-6 py-2 rounded-full hover:bg-[#2aa89b] hover:text-white transition inline-block"
               >
-                Registrar Donación
+                Registrar donación
               </Link>
             </div>
           </div>
@@ -378,76 +337,38 @@ export const Home = () => {
       {/* FOOTER */}
       <footer
         id="contacto"
-        className="text-center bg-green-50 p-6 sm:px-20 sm:py-10 mt-20 rounded-tr-3xl rounded-tl-3xl space-y-8"
+        className="bg-black/80 text-white py-14 px-6 text-center backdrop-blur-md"
       >
-        <div className="flex justify-between items-center flex-wrap gap-6">
-          <div
-            className="text-3xl font-extrabold text-teal-800"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+        <h3
+          className="text-3xl font-bold mb-6"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Contáctanos
+        </h3>
+        <div className="flex justify-center gap-8 mb-8">
+          <a
+            href="https://www.facebook.com/MuseoGustavoOrcesEPN?locale=es_LA"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-4xl hover:text-[#2aa89b] transition"
           >
-            Contáctanos
-          </div>
-
-          <ul className="flex gap-6 mt-4 sm:mt-0 text-teal-800">
-            <li>
-              <a
-                href="https://www.facebook.com/MuseoGustavoOrcesEPN?locale=es_LA"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook Museo Gustavo Orcés"
-                className="hover:scale-110 transition-transform duration-300"
-              >
-                <FaFacebook className="text-4xl hover:text-green-700 transition-colors" />
-              </a>
-            </li>
-
-            <li>
-              <a
-                href="https://www.instagram.com/mhngov?igsh=aHFzcjB2ZDNiM2o5"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram Museo Gustavo Orcés"
-                className="hover:scale-110 transition-transform duration-300"
-              >
-                <FaSquareInstagram className="text-4xl hover:text-green-700 transition-colors" />
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="text-left text-gray-800 font-medium space-y-2">
-          <p className="flex items-center gap-2">
-            <FaEnvelope className="text-teal-700" />
-            <span>
-              Email:{" "}
-              <span className="font-semibold">info@museogustavorces.ec</span>
-            </span>
-          </p>
-          <p className="flex items-center gap-2">
-            <FaPhone className="text-teal-700" />
-            <span>
-              Teléfono: <span className="font-semibold">02 123 4567</span>
-            </span>
-          </p>
-          <p className="flex items-center gap-2">
-            <FaMapMarkerAlt className="text-teal-700" />
-            <span>Ladrón de Guevara E11-253, Quito</span>
-          </p>
-        </div>
-
-        <hr className="border-t-2 border-teal-800" />
-
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="font-semibold text-teal-800">
-            © 2025 Museo Gustavo Orcés - Escuela Politécnica Nacional
-          </p>
-          <Link
-            to="/login"
-            className="text-sm text-teal-700 hover:text-green-800 transition-colors"
+            <FaFacebook />
+          </a>
+          <a
+            href="https://www.instagram.com/mhngov?igsh=aHFzcjB2ZDNiM2o5"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-4xl hover:text-[#2aa89b] transition"
           >
-            Acceso para personal del museo →
-          </Link>
+            <FaSquareInstagram />
+          </a>
         </div>
+        <p className="text-white/90">
+          info@museogustavorces.ec • 02 123 4567 • Quito, Ecuador
+        </p>
+        <p className="mt-10 text-white/80 text-sm">
+          © 2025 Museo Gustavo Orcés – Escuela Politécnica Nacional
+        </p>
       </footer>
     </>
   );
