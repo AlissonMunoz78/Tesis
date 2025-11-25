@@ -40,7 +40,7 @@ const CreateAdmini = () => {
             <input
               type="text"
               name="nombre"
-              placeholder="Juan Pérez"
+              placeholder="Nombre y Apellido"
               value={formData.nombre}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500"

@@ -6,7 +6,6 @@ import api from '../../api/axios';
 import storeAuth from '../../context/storeAuth';
 import dino from '../../assets/dino.jpg';
 
-
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -157,13 +156,21 @@ const Login = () => {
           </span>
         </button>
 
+        {/* 🔵 BOTÓN PARA REGRESAR AL HOME */}
+        <button
+          onClick={() => navigate('/')}
+          className="w-full mt-4 bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition"
+        >
+          REGRESAR
+        </button>
+
         {/* Info */}
         <div className="mt-6 text-center space-y-2">
           <p className="text-xs text-gray-500">
             <strong>Administradores:</strong> Usa correo y contraseña.
           </p>
           <p className="text-xs text-gray-500">
-            <strong>Pasantes:</strong> Usa Google OAuth.
+            <strong>Pasantes:</strong> Ingresa mediante Google.
           </p>
         </div>
       </div>
